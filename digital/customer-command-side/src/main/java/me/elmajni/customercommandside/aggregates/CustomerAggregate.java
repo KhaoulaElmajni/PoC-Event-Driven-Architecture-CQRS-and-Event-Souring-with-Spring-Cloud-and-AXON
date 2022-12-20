@@ -2,9 +2,8 @@ package me.elmajni.customercommandside.aggregates;
 
 import lombok.extern.slf4j.Slf4j;
 import me.elmajni.coreapi.commands.CreateCustomCommand;
-import me.elmajni.coreapi.events.CustomCreatedEvent;
+import me.elmajni.coreapi.events.CustomerCreatedEvent;
 import org.axonframework.commandhandling.CommandHandler;
-import org.axonframework.eventhandling.EventHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateLifecycle;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
@@ -24,7 +23,7 @@ public class CustomerAggregate {
     @CommandHandler
     public CustomerAggregate(CreateCustomCommand command) {
         log.info("CreateCustomCommand received!");
-        AggregateLifecycle.apply(new CustomCreatedEvent(
+        AggregateLifecycle.apply(new CustomerCreatedEvent(
                 command.getId(),
                 command.getName(),
                 command.getEmail()
@@ -32,7 +31,7 @@ public class CustomerAggregate {
     }
 
     @EventSourcingHandler
-    public void on(CustomCreatedEvent event) {
+    public void on(CustomerCreatedEvent event) {
         log.info("CustomCreatedEvent occured!");
         this.customerId = event.getId();
         this.name = event.getName();
