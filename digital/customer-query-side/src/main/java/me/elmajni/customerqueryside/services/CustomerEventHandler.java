@@ -17,6 +17,8 @@ public class CustomerEventHandler {
 
     @EventHandler
     public void on(CustomerCreatedEvent event) {
+        log.info("************************");
+        log.info("Handling CustomerCreatedEvent: {}", event);
         Customer customer = new Customer();
         customer.setId(event.getId());
         customer.setName(event.getName());
